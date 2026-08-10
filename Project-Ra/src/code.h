@@ -1,3 +1,12 @@
+/*
+ * code.h
+ * Created on Mon Aug 10 2026
+ * Part of C-Ra — SPDX-License-Identifier: MIT
+ * Copyright (c) 2026 Omar Eltayeb
+ *
+ * Defines bytecode opcodes and chunks
+ */
+
 #ifndef ra_code_h
 #define ra_code_h
 
