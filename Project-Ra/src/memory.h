@@ -1,0 +1,10 @@
+
+#ifndef ra_memory_h
+#define ra_memory_h
+
+#include "common.h"
+
+void* ra_realloc(void* block, size_t new_size);
+void ra_free(void* block);
+
+#endif
