@@ -1,7 +1,7 @@
 /*
  * main.c
  * Created on Mon Aug 10 2026
- * Part of C-Ra — SPDX-License-Identifier: MIT
+ * Part of CRa — SPDX-License-Identifier: MIT
  * Copyright (c) 2026 Omar Eltayeb
  */
 
