@@ -34,21 +34,12 @@ void chunk_push(Chunk* chunk, uint8_t byte)
     chunk->count++;
 }
 
-void chunk_push(Chunk* c, uint8_t val)
+int chunk_push_constant(Chunk* chunk, Value value)
 {
-    if (c->code && (c->capacity < c->count + 1))
-    {
-        c->capacity *= 2;
-        c->code = ra_realloc(c->code, sizeof(uint8_t) * c->capacity);
-    }
-    else
-    {
-        c->capacity = 8;
-        c->code = ra_realloc(NULL, sizeof(uint8_t) * c->capacity);
-    }
+    assert(chunk);
 
-    c->code[c->count] = val;
-    c->count++;
+    value_array_push(&chunk->constants, value);
+    return chunk->constants.count - 1;
 }
 
 void chunk_clear(Chunk* chunk)

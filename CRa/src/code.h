@@ -11,10 +11,12 @@
 #define ra_code_h
 
 #include "common.h"
+#include "value.h"
 
 typedef enum
 {
     OP_RETURN,
+    OP_CONSTANT,
 } Opcode;
 
 typedef struct
@@ -22,10 +24,12 @@ typedef struct
     int count;
     int capacity;
     uint8_t* code;
+    ValueArray constants;
 } Chunk;
 
-void chunk_init(Chunk* c);
-void chunk_push(Chunk* c, uint8_t val);
-void chunk_clear(Chunk* c);
+void chunk_init(Chunk* chunk);
+void chunk_push(Chunk* chunk, uint8_t byte);
+int chunk_push_constant(Chunk* chunk, Value value);
+void chunk_clear(Chunk* chunk);
 
 #endif

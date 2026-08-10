@@ -13,6 +13,10 @@ int main(int argc, char* argv[])
 {
     Chunk chunk;
     chunk_init(&chunk);
+
+    int constant_index = chunk_push_constant(&chunk, 1.2);
+    chunk_push(&chunk, OP_CONSTANT);
+    chunk_push(&chunk, constant_index);
     chunk_push(&chunk, OP_RETURN);
 
     disassemble_chunk(&chunk, "Chunk1");
