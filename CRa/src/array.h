@@ -10,4 +10,6 @@
 #ifndef ra_array_h
 #define ra_array_h
 
+#define GROW_CAPACITY(capacity) ((capacity) < 8 ? 8 : (capacity) * 2)
+
 #endif

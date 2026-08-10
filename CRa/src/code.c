@@ -8,14 +8,30 @@
  */
 
 #include "code.h"
+#include "array.h"
 #include "memory.h"
 
 #include <memory.h>
 #include <stdlib.h>
 
-void chunk_init(Chunk* c)
+void chunk_init(Chunk* chunk)
 {
-    memset(c, 0, sizeof(Chunk));
+    assert(chunk);
+
+    memset(chunk, 0, sizeof(Chunk));
+    value_array_init(&chunk->constants);
+}
+
+void chunk_push(Chunk* chunk, uint8_t byte)
+{
+    assert(chunk);
+
+    chunk->capacity = GROW_CAPACITY(chunk->capacity);
+    chunk->code =
+        ra_realloc(chunk->code, sizeof(uint8_t) * chunk->capacity);
+
+    chunk->code[chunk->count] = byte;
+    chunk->count++;
 }
 
 void chunk_push(Chunk* c, uint8_t val)
@@ -35,8 +51,11 @@ void chunk_push(Chunk* c, uint8_t val)
     c->count++;
 }
 
-void chunk_clear(Chunk* c)
+void chunk_clear(Chunk* chunk)
 {
-    ra_free(c->code);
-    chunk_init(c);
+    assert(chunk);
+
+    ra_free(chunk->code);
+    value_array_clear(&chunk->constants);
+    chunk_init(chunk);
 }
