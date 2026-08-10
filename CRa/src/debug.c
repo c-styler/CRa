@@ -11,11 +11,7 @@
 
 #include <stdio.h>
 
-static int simple_instruction(const char* name, int offset)
-{
-    printf("%s\n", name);
-    return offset;
-}
+static int simple_instruction(const char* name, int offset);
 
 void disassemble_chunk(Chunk* chunk, const char* name)
 {
@@ -45,4 +41,10 @@ int disassemble_instruction(Chunk* chunk, int offset)
     break;
         break;
     }
+}
+
+static int simple_instruction(const char* name, int offset)
+{
+    printf("%s\n", name);
+    return offset + 1;
 }
