@@ -26,9 +26,12 @@ void chunk_push(Chunk* chunk, uint8_t byte)
 {
     assert(chunk);
 
-    chunk->capacity = GROW_CAPACITY(chunk->capacity);
-    chunk->code =
-        ra_realloc(chunk->code, sizeof(uint8_t) * chunk->capacity);
+    if (chunk->count >= chunk->capacity)
+    {
+        chunk->capacity = GROW_CAPACITY(chunk->capacity);
+        chunk->code =
+            ra_realloc(chunk->code, sizeof(uint8_t) * chunk->capacity);
+    }
 
     chunk->code[chunk->count] = byte;
     chunk->count++;

@@ -30,9 +30,12 @@ void value_array_push(ValueArray* array, Value value)
 {
     assert(array);
 
-    array->capacity = GROW_CAPACITY(array->capacity);
-    array->values =
-        ra_realloc(array->values, sizeof(Value) * array->capacity);
+    if (array->count >= array->capacity)
+    {
+        array->capacity = GROW_CAPACITY(array->capacity);
+        array->values =
+            ra_realloc(array->values, sizeof(Value) * array->capacity);
+    }
 
     array->values[array->count] = value;
     array->count++;
