@@ -28,13 +28,27 @@ void disassemble_chunk(Chunk* chunk, const char* name)
 int disassemble_instruction(Chunk* chunk, int offset)
 {
     printf("%04d ", offset);
-    if (offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1])
+
+    int line_start_offset = 0;
+    for (int i = 0; i < chunk->lines_count; i++)
     {
-        printf("   | ");
-    }
-    else
-    {
-        printf("%4d ", chunk->lines[offset]);
+        LineEntry* line_entry = chunk->lines + i;
+        if ((offset >= line_start_offset) &&
+            (offset < line_start_offset + line_entry->size))
+        {
+            if (offset != line_start_offset)
+            {
+                printf("   | ");
+            }
+            else
+            {
+                printf("%4d ", line_entry->number);
+            }
+
+            break;
+        }
+
+        line_start_offset += line_entry->size;
     }
 
     uint8_t instruction = chunk->code[offset];

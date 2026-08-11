@@ -31,13 +31,32 @@ void chunk_push(Chunk* chunk, uint8_t byte, int line)
         chunk->capacity = GROW_CAPACITY(chunk->capacity);
         chunk->code =
             ra_realloc(chunk->code, sizeof(uint8_t) * chunk->capacity);
-
-        chunk->lines =
-            ra_realloc(chunk->lines, sizeof(int) * chunk->capacity);
     }
 
+    for (int i = 0; i < chunk->lines_count; i++)
+    {
+        LineEntry* line_entry = chunk->lines + i;
+        if (line_entry->number == line)
+        {
+            line_entry->size++;
+            goto line_tracked;
+        }
+    }
+
+    if (chunk->lines_count >= chunk->lines_capacity)
+    {
+        chunk->lines_capacity = GROW_CAPACITY(chunk->lines_capacity);
+        chunk->lines = ra_realloc(
+            chunk->lines, sizeof(LineEntry) * chunk->lines_capacity);
+    }
+
+    LineEntry* line_entry = chunk->lines + chunk->lines_count;
+    line_entry->number = line;
+    line_entry->size = 1;
+    chunk->lines_count++;
+
+line_tracked:
     chunk->code[chunk->count] = byte;
-    chunk->lines[chunk->count] = line;
     chunk->count++;
 }
 

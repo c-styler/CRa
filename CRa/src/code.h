@@ -21,10 +21,20 @@ typedef enum
 
 typedef struct
 {
+    int number;
+    int size; // How many bytes this line covers
+} LineEntry;
+
+typedef struct
+{
     int count;
     int capacity;
     uint8_t* code;
-    int* lines;
+
+    LineEntry* lines;
+    int lines_count;
+    int lines_capacity;
+
     ValueArray constants;
 } Chunk;
 

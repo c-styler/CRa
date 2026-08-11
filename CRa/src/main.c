@@ -17,6 +17,8 @@ int main(int argc, char* argv[])
     int constant_index = chunk_push_constant(&chunk, 1.2);
     chunk_push(&chunk, OP_CONSTANT, 1);
     chunk_push(&chunk, constant_index, 1);
+    chunk_push(&chunk, OP_CONSTANT, 1);
+    chunk_push(&chunk, constant_index, 1);
     chunk_push(&chunk, OP_RETURN, 2);
 
     disassemble_chunk(&chunk, "Chunk1");
