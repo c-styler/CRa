@@ -22,7 +22,7 @@ void chunk_init(Chunk* chunk)
     value_array_init(&chunk->constants);
 }
 
-void chunk_push(Chunk* chunk, uint8_t byte)
+void chunk_push(Chunk* chunk, uint8_t byte, int line)
 {
     assert(chunk);
 
@@ -31,9 +31,13 @@ void chunk_push(Chunk* chunk, uint8_t byte)
         chunk->capacity = GROW_CAPACITY(chunk->capacity);
         chunk->code =
             ra_realloc(chunk->code, sizeof(uint8_t) * chunk->capacity);
+
+        chunk->lines =
+            ra_realloc(chunk->lines, sizeof(int) * chunk->capacity);
     }
 
     chunk->code[chunk->count] = byte;
+    chunk->lines[chunk->count] = line;
     chunk->count++;
 }
 
@@ -50,6 +54,7 @@ void chunk_clear(Chunk* chunk)
     assert(chunk);
 
     ra_free(chunk->code);
+    ra_free(chunk->lines);
     value_array_clear(&chunk->constants);
     chunk_init(chunk);
 }

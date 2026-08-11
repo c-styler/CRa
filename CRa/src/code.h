@@ -24,11 +24,12 @@ typedef struct
     int count;
     int capacity;
     uint8_t* code;
+    int* lines;
     ValueArray constants;
 } Chunk;
 
 void chunk_init(Chunk* chunk);
-void chunk_push(Chunk* chunk, uint8_t byte);
+void chunk_push(Chunk* chunk, uint8_t byte, int line);
 int chunk_push_constant(Chunk* chunk, Value value);
 void chunk_clear(Chunk* chunk);
 
