@@ -18,7 +18,19 @@ int main(int argc, char* argv[])
     int constant_index = chunk_push_constant(&chunk, 1.2);
     chunk_push(&chunk, OP_CONSTANT, 1);
     chunk_push(&chunk, constant_index, 1);
-    chunk_push(&chunk, OP_NEGATE, 1);
+
+    constant_index = chunk_push_constant(&chunk, 1.2);
+    chunk_push(&chunk, OP_CONSTANT, 123);
+    chunk_push(&chunk, constant_index, 123);
+
+    chunk_push(&chunk, OP_ADD, 123);
+
+    constant_index = chunk_push_constant(&chunk, 5.6);
+    chunk_push(&chunk, OP_CONSTANT, 123);
+    chunk_push(&chunk, constant_index, 123);
+
+    chunk_push(&chunk, OP_DIVIDE, 123);
+    chunk_push(&chunk, OP_NEGATE, 123);
     chunk_push(&chunk, OP_RETURN, 2);
 
     VM vm = {0};
