@@ -64,6 +64,11 @@ int disassemble_instruction(Chunk* chunk, int offset)
     }
     break;
 
+    case OP_NEGATE: {
+        return simple_instruction("OP_NEGATE", offset);
+    }
+    break;
+
     default: {
         printf("Unknown opcode: %d\n", instruction);
         return offset + 1;

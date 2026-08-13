@@ -53,6 +53,7 @@ static InterpretResult run(VM* vm)
         switch (instruction = READ_BYTE())
         {
         case OP_RETURN: {
+            printf("Return code: ");
             value_print(pop(vm));
             printf("\n");
             return INTERPRET_RESULT_OK;
@@ -63,6 +64,11 @@ static InterpretResult run(VM* vm)
             Value constant = READ_CONSTANT();
             push(vm, constant);
             break;
+        }
+        break;
+
+        case OP_NEGATE: {
+            push(vm, -pop(vm));
         }
         break;
         }
