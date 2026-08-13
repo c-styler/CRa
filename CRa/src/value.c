@@ -21,15 +21,11 @@ void value_print(Value value)
 
 void value_array_init(ValueArray* array)
 {
-    assert(array);
-
     memset(array, 0, sizeof(ValueArray));
 }
 
 void value_array_push(ValueArray* array, Value value)
 {
-    assert(array);
-
     if (array->count >= array->capacity)
     {
         array->capacity = GROW_CAPACITY(array->capacity);
@@ -41,10 +37,15 @@ void value_array_push(ValueArray* array, Value value)
     array->count++;
 }
 
+Value value_array_get(ValueArray* array, int index)
+{
+    assert((index < array->count) || (index >= 0));
+
+    return array->values[index];
+}
+
 void value_array_clear(ValueArray* array)
 {
-    assert(array);
-
     ra_free(array->values);
     value_array_init(array);
 }

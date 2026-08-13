@@ -8,6 +8,7 @@
 #include "code.h"
 #include "common.h"
 #include "debug.h"
+#include "vm.h"
 
 int main(int argc, char* argv[])
 {
@@ -21,7 +22,10 @@ int main(int argc, char* argv[])
     chunk_push(&chunk, constant_index, 1);
     chunk_push(&chunk, OP_RETURN, 2);
 
-    disassemble_chunk(&chunk, "Chunk1");
+    VM vm = {0};
+    vm_interpret(&vm, &chunk);
+
+    //    disassemble_chunk(&chunk, "Chunk1");
     chunk_clear(&chunk);
 
     return 0;

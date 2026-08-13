@@ -25,6 +25,7 @@ void value_print(Value value);
 
 void value_array_init(ValueArray* array);
 void value_array_push(ValueArray* array, Value value);
+Value value_array_get(ValueArray* array, int index);
 void value_array_clear(ValueArray* array);
 
 #endif
