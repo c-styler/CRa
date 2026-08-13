@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
     chunk_push(&chunk, OP_RETURN, 2);
 
     VM vm = {0};
+    vm_init(&vm);
     vm_interpret(&vm, &chunk);
 
     //    disassemble_chunk(&chunk, "Chunk1");

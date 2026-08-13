@@ -12,11 +12,17 @@
 
 #include "code.h"
 #include "common.h"
+#include "value.h"
+
+#define VALUE_STACK_MAX 256
 
 typedef struct
 {
     Chunk* chunk;
     uint8_t* ip;
+
+    Value stack[VALUE_STACK_MAX];
+    Value* stack_top;
 } VM;
 
 typedef enum
@@ -26,6 +32,7 @@ typedef enum
     INTERPRET_RESULT_RUNTIME_ERROR
 } InterpretResult;
 
+void vm_init(VM* vm);
 InterpretResult vm_interpret(VM* vm, Chunk* chunk);
 
 #endif
