@@ -110,7 +110,7 @@ static void push(VM* vm, Value value)
 {
     if ((vm->stack_top - vm->stack) >= VALUE_STACK_MAX)
     {
-        assert("ERROR: Stack Overflow");
+        assert(false && "ERROR: Stack Overflow");
     }
 
     *(vm->stack_top) = value;
@@ -121,7 +121,7 @@ static Value pop(VM* vm)
 {
     if (vm->stack_top <= vm->stack)
     {
-        assert("ERROR: Stack Underflow");
+        assert(false && "ERROR: Stack Underflow");
     }
     vm->stack_top--;
     return *(vm->stack_top);
