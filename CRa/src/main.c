@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     }
 
     Scanner scanner = {0};
-    scanner_init(&scanner, "1 1.0 3 14.2\n256 * 128");
+    scanner_init(&scanner, "myVar\nidx = 12");
     while (true)
     {
         Token token = scanner_scan_token(&scanner);
@@ -45,6 +45,7 @@ int main(int argc, char* argv[])
             break;
         }
 
+        printf("TOKTYPE %d : ", token.type);
         for (int i = 0; i < token.length; i++)
         {
             printf("%c", token.start[i]);
