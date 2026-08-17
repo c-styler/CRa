@@ -168,6 +168,24 @@ static Token make_number(Scanner* scanner)
     return make_token(scanner, TOKEN_INT);
 }
 
+static bool is_alpha(char c)
+{
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
+}
+
+static TokenType identifier_type(Scanner* scanner)
+{
+    return TOKEN_IDENTIFIER;
+}
+
+static Token make_identifier(Scanner* scanner)
+{
+    while (is_alpha(peek(scanner)) || is_digit(peek(scanner)))
+        advance(scanner);
+
+    return make_token(scanner, identifier_type(scanner));
+}
+
 Token scanner_scan_token(Scanner* scanner)
 {
     skip_whitespace(scanner);
@@ -180,7 +198,13 @@ Token scanner_scan_token(Scanner* scanner)
     char c = advance(scanner);
 
     if (is_digit(c))
+    {
         return make_number(scanner);
+    }
+    if (is_alpha(c))
+    {
+        return make_identifier(scanner);
+    }
 
     switch (c)
     {
