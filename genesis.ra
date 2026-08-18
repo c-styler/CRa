@@ -1,0 +1,45 @@
+
+struct Position {
+    rect_x: float = 0;
+    rect_y: float = 0;
+}
+
+Position rect_pos;
+
+gameloop
+{
+    move_rect();
+
+    for y := rect_y; y < 50; y += 1
+    {
+        for x := rect_x; x < 50; x += 1
+        {
+            graphics.draw_pixel(x, y, RED);
+        }
+    }
+
+    for i := 0; i < 10; i += 1 {
+
+    }
+}
+
+procedure move_rect()
+{
+    if (input.key_down(key_left))
+    {
+        rect_pos.x -= 10 * dt;
+    }
+    else if (input.key_down(key_right))
+    {
+        rect_pos.x += 10 * dt;
+    }
+
+    if (input.key_down(key_up))
+    {
+        rect_pos.y -= 10 * dt;
+    }
+    else if (input.key_down(key_down))
+    {
+        rect_pos.y += 10 * dt;
+    }
+}
