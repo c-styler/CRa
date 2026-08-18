@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
     }
 
     Scanner scanner = {0};
-    scanner_init(&scanner, "myVar\nidx = 12");
+    scanner_init(&scanner, "struct my_struct;\nreturn true;");
     while (true)
     {
         Token token = scanner_scan_token(&scanner);

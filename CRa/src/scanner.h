@@ -54,6 +54,8 @@ typedef enum
     TOKEN_RETURN,
     TOKEN_TRUE,
     TOKEN_WHILE,
+    TOKEN_PROCEDURE,
+    TOKEN_STRUCT,
 
     TOKEN_ERROR,
     TOKEN_EOF

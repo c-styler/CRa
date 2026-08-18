@@ -69,6 +69,11 @@ static char peek_next(Scanner* scanner)
     return scanner->current[1];
 }
 
+static int length(Scanner* scanner)
+{
+    return (int)(scanner->current - scanner->start);
+}
+
 void scanner_init(Scanner* scanner, const char* source)
 {
     scanner->start = source;
@@ -173,8 +178,67 @@ static bool is_alpha(char c)
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 }
 
+/*
+ * rest : string containing the rest of the keyword (after *start*)
+ */
+static TokenType check_keyword(Scanner* scanner, int start, int length,
+                               const char* rest, TokenType type)
+{
+    bool length_match =
+        (scanner->current - scanner->start) == (start + length);
+    if (length_match &&
+        memcmp(scanner->start + start, rest, length) == 0)
+    {
+        return type;
+    }
+
+    return TOKEN_IDENTIFIER;
+}
+
 static TokenType identifier_type(Scanner* scanner)
 {
+    switch (scanner->start[0])
+    {
+    case 'a':
+        return check_keyword(scanner, 1, 2, "nd", TOKEN_AND);
+    case 'e':
+        return check_keyword(scanner, 1, 3, "lse", TOKEN_ELSE);
+    case 'f':
+    {
+        if (length(scanner) > 1)
+        {
+            switch (scanner->start[1])
+            {
+            case 'a':
+                return check_keyword(scanner, 2, 3, "lse", TOKEN_FALSE);
+            case 'o':
+                return check_keyword(scanner, 2, 1, "r", TOKEN_FOR);
+            }
+        }
+    }
+    break;
+    case 'i':
+        return check_keyword(scanner, 1, 1, "f", TOKEN_IF);
+
+    case 'o':
+        return check_keyword(scanner, 1, 1, "r", TOKEN_OR);
+
+    case 'r':
+        return check_keyword(scanner, 1, 5, "eturn", TOKEN_RETURN);
+
+    case 't':
+        return check_keyword(scanner, 1, 3, "rue", TOKEN_TRUE);
+
+    case 'w':
+        return check_keyword(scanner, 1, 4, "hile", TOKEN_WHILE);
+
+    case 'p':
+        return check_keyword(scanner, 1, 8, "rocedure",
+                             TOKEN_PROCEDURE);
+    case 's':
+        return check_keyword(scanner, 1, 5, "truct", TOKEN_STRUCT);
+    }
+
     return TOKEN_IDENTIFIER;
 }
 
